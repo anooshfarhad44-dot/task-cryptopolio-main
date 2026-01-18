@@ -79,135 +79,187 @@ export default function LoginModal({ closemod }) {
     closemod[0](false);
   } else {
     return (
-      <div>
-        <div className="w-[100%] fixed top-0 h-full snap-none z-50  bg-[#131722c3]">
-          {/* <div className="z-10 w-[250px] h-[150px] mt-[250px] ml-[450px] hidden sm:inline-flex absolute rounded-full bg-[#9f9c9c] blur-lg"></div> */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto py-8">
+        {/* Backdrop with blur */}
+        <div 
+          className="absolute inset-0 bg-[#131722] bg-opacity-90 backdrop-blur-sm"
+          onClick={() => closemod[0](false)}
+        ></div>
+        
+        {/* Animated background gradients */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 grad_bg rounded-full blur-3xl opacity-20 animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 grad_bg rounded-full blur-3xl opacity-20 animate-pulse delay-1000"></div>
+        </div>
 
-          {/* background div*/}
+        {/* Modal Card */}
+        <div className="relative w-[90%] max-w-2xl bg-gradient-to-br from-[#1d2230] to-[#272e41] rounded-2xl shadow-2xl border border-[#3a4155] overflow-hidden transform transition-all duration-300 hover:scale-[1.01] my-8">
+          {/* Close Button */}
+          <button
+            onClick={() => closemod[0](false)}
+            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200 z-10"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
 
-          <div className="text-black bg-white rounded-md border-2 border-white w-[70%] md:w-[50%] mx-auto mt-[40px] md:mt-[200px]">
-            <button
-              onClick={() => {
-                closemod[0](false);
-              }}
-              className="font-bold ml-5 mt-3"
-            >
-              X
-            </button>
-            <div className=" ">
-              {/* <div className=" animate-pulse rounded-full bg-[#b3b3b3] blur-lg absolute hidden mt-[20px] ml-[10px] sm:inline-flex w-[300px] h-[200px] z-10"></div> */}
-              <div className="">
-                <h1 className=" text-center p-1 font-bold text-[18px] sm:text-[25px] z-50 ">
-                  Welcome to our Cryptofolio!
-                </h1>
+          {/* Header */}
+          <div className="p-8 pb-6">
+            <div className="text-center mb-2">
+              <h1 className="text-3xl font-bold text-white mb-2">
+                Join CryptoFolio
+              </h1>
+              <p className="text-gray-400 text-sm">
+                Create your account and start trading today
+              </p>
+            </div>
+          </div>
 
-                <form className=" grid grid-cols-1 md:grid-cols-2 p-3">
-                  <div className=" flex p-2 justify-between m-1 flex-wrap z-50">
-                    <label for="first_name" className="font-semibold">
-                      First Name
-                    </label>
-                    <div>
-                      <input
-                        type="text"
-                        id="first_name"
-                        name="first_name"
-                        value={credentials.first_name}
-                        onChange={onchange}
-                        className="text-black bg-[#cfcfcf]"
-                      />
-                    </div>
+          {/* Form */}
+          <form className="px-8 pb-8" onSubmit={(e) => { e.preventDefault(); eventHandler(); }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* First Name */}
+              <div>
+                <label htmlFor="first_name" className="block text-sm font-medium text-gray-300 mb-2">
+                  First Name *
+                </label>
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  value={credentials.first_name}
+                  onChange={onchange}
+                  className="w-full px-4 py-3 bg-[#171b26] border border-[#3a4155] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#209fe4] focus:border-transparent transition-all duration-200"
+                  placeholder="John"
+                  required
+                />
+              </div>
+
+              {/* Last Name */}
+              <div>
+                <label htmlFor="last_name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Last Name *
+                </label>
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  value={credentials.last_name}
+                  onChange={onchange}
+                  className="w-full px-4 py-3 bg-[#171b26] border border-[#3a4155] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#209fe4] focus:border-transparent transition-all duration-200"
+                  placeholder="Doe"
+                  required
+                />
+              </div>
+
+              {/* Age */}
+              <div>
+                <label htmlFor="age" className="block text-sm font-medium text-gray-300 mb-2">
+                  Age
+                </label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  value={credentials.age}
+                  onChange={onchange}
+                  className="w-full px-4 py-3 bg-[#171b26] border border-[#3a4155] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#209fe4] focus:border-transparent transition-all duration-200"
+                  placeholder="25"
+                  min="18"
+                />
+              </div>
+
+              {/* Mobile */}
+              <div>
+                <label htmlFor="mob" className="block text-sm font-medium text-gray-300 mb-2">
+                  Mobile Number
+                </label>
+                <input
+                  type="tel"
+                  id="mob"
+                  name="mob"
+                  value={credentials.mob}
+                  onChange={onchange}
+                  className="w-full px-4 py-3 bg-[#171b26] border border-[#3a4155] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#209fe4] focus:border-transparent transition-all duration-200"
+                  placeholder="+91 1234567890"
+                />
+              </div>
+
+              {/* Email */}
+              <div className="md:col-span-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email Address *
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                    </svg>
                   </div>
-                  <div className=" flex p-2 justify-between m-1 flex-wrap z-50">
-                    <label for="last_name" className="font-semibold">
-                      Last Name
-                    </label>
-                    <div>
-                      <input
-                        type="text"
-                        id="last_name"
-                        name="last_name"
-                        value={credentials.last_name}
-                        onChange={onchange}
-                        className="text-black bg-[#cfcfcf]"
-                      />
-                    </div>
-                  </div>
-                  <div className=" flex p-2 justify-between m-1 flex-wrap  z-50">
-                    <label for="age" className="font-semibold">
-                      Age
-                    </label>
-                    <div>
-                      <input
-                        type="number"
-                        id="age"
-                        name="age"
-                        value={credentials.age}
-                        onChange={onchange}
-                        className="text-black bg-[#cfcfcf]"
-                      />
-                    </div>
-                  </div>
-                  <div className="  flex p-2 justify-between m-1 flex-wrap">
-                    <label for="mob" className="font-semibold">
-                      Mobile number
-                    </label>
-                    <div>
-                      <input
-                        type="number"
-                        id="mob"
-                        name="mob"
-                        value={credentials.mob}
-                        onChange={onchange}
-                        className="text-black bg-[#cfcfcf]"
-                      />
-                    </div>
-                  </div>
-                  <div className="  flex p-2 justify-between m-1 flex-wrap">
-                    <label for="email" className="font-semibold">
-                      Email
-                    </label>
-                    <div>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={credentials.email}
-                        onChange={onchange}
-                        className="text-black bg-[#cfcfcf]"
-                      />
-                    </div>
-                  </div>
-                  <div className="  flex p-2 justify-between m-1 flex-wrap">
-                    <label for="password" className="font-semibold">
-                      Password
-                    </label>
-                    <div>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={credentials.password}
-                        onChange={onchange}
-                        className="text-black bg-[#cfcfcf] "
-                      />
-                    </div>
-                  </div>
-                </form>
-                <div className="text-center mx-auto font-semibold">
-                  <button
-                    onClick={() => {
-                      closemod[1](true);
-                      closemod[0](false);
-                    }}
-                  >
-                    Already a user...?
-                  </button>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={credentials.email}
+                    onChange={onchange}
+                    className="w-full pl-10 pr-4 py-3 bg-[#171b26] border border-[#3a4155] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#209fe4] focus:border-transparent transition-all duration-200"
+                    placeholder="john.doe@example.com"
+                    required
+                  />
                 </div>
-                <div className="text-center mx-auto font-semibold m-3 bg-[#131722] rounded-md text-white w-[100px] p-1 hover:bg-[#414141]">
-                  <button onClick={eventHandler}>Sign Up</button>
+              </div>
+
+              {/* Password */}
+              <div className="md:col-span-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                  Password * (min. 5 characters)
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={credentials.password}
+                    onChange={onchange}
+                    className="w-full pl-10 pr-4 py-3 bg-[#171b26] border border-[#3a4155] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#209fe4] focus:border-transparent transition-all duration-200"
+                    placeholder="Enter a strong password"
+                    required
+                    minLength="5"
+                  />
                 </div>
               </div>
             </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              onClick={eventHandler}
+              className="w-full mt-6 py-3 px-4 bg-gradient-to-r from-[#5659f3] to-[#0ea7df] text-white font-semibold rounded-lg hover:from-[#4a4dd8] hover:to-[#0d95c8] focus:outline-none focus:ring-2 focus:ring-[#209fe4] focus:ring-offset-2 focus:ring-offset-[#1d2230] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+            >
+              Create Account
+            </button>
+          </form>
+
+          {/* Footer */}
+          <div className="px-8 pb-6 text-center">
+            <p className="text-gray-400 text-sm">
+              Already have an account?{" "}
+              <button
+                onClick={() => {
+                  closemod[1](true);
+                  closemod[0](false);
+                }}
+                className="text-[#209fe4] hover:text-[#0ea7df] font-semibold transition-colors duration-200 underline"
+              >
+                Sign In
+              </button>
+            </p>
           </div>
         </div>
       </div>

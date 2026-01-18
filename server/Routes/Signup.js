@@ -13,31 +13,44 @@ router.post(
   body("password", "too small").isLength({ min: 5 }),
   async (req, res) => {
     try {
-      //logic for signin
+      // Check for validation errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
 
+      //logic for signin
       const username = req.body.email;
       const pswd = req.body.password;
-      console.log(pswd);
+      console.log("Login attempt for:", username);
+      
       let userdata = await User.findOne({ email: username });
-      // console.log(userdata.password);
       console.log({ userdata });
 
-      const data = {
-        user: {
-          id: userdata._id,
-        },
-      };
-      const authToken = jwt.sign(data, jwtSecret);
+      // Check if user exists first
+      if (!userdata) {
+        return res.send("No such user found");
+      }
 
+      // Verify password
       const comparepswd = await bcrypt.compare(pswd, userdata.password);
-      console.log(comparepswd);
-      if (userdata && comparepswd) {
+      console.log("Password match:", comparepswd);
+      
+      if (comparepswd) {
+        // Create JWT token only if user exists and password is correct
+        const data = {
+          user: {
+            id: userdata._id,
+          },
+        };
+        const authToken = jwt.sign(data, jwtSecret);
         res.send({ userdata, authToken });
       } else {
         res.send("No such user found");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Signup route error:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 );

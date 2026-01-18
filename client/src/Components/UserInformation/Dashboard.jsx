@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import ModalTransactions from "./ModalTransactions";
+import AssetManagement from "../AssetManagement/AssetManagement";
 
 export default function Dashboard() {
   useEffect(() => {}, []);
@@ -15,7 +16,7 @@ export default function Dashboard() {
   const getallTransaction = async () => {
     await axios({
       method: "POST",
-      url: "https://cryptofolio-backstack-aiwo.onrender.com/wallet/getwalletTransaction",
+      url: "http://localhost:3001/wallet/getwalletTransaction",
       data: {
         login: login,
       },
@@ -58,7 +59,7 @@ export default function Dashboard() {
   const getamount = async () => {
     await axios({
       method: "POST",
-      url: "https://cryptofolio-backstack-aiwo.onrender.com/wallet/getwalletAmount",
+      url: "http://localhost:3001/wallet/getwalletAmount",
       data: {
         login: login,
       },
@@ -95,7 +96,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchuserdata = async () => {
       const response = await fetch(
-        "https://cryptofolio-backstack-aiwo.onrender.com/dashboard/userdetails",
+        "http://localhost:3001/dashboard/userdetails",
         {
           method: "POST",
           body: JSON.stringify({ UserId: userid }),
@@ -194,6 +195,12 @@ export default function Dashboard() {
                 <div></div>
               </div>
             </div>
+            
+            {/* Asset Management Section */}
+            <div className="mb-4">
+              <AssetManagement />
+            </div>
+
             <div>
               <div className="w-[90%]  mx-auto bg-[#272e41] p-5  rounded-lg ">
                 <div className="font-bold text-white text-center  md:text-left text-[20px] md:text-[22px] mb-8">

@@ -40,8 +40,8 @@ router.post(
           mob: req.body.mob,
           email: req.body.email,
           password: securepassword,
-        }).then(console.log("user created"));
-        // .then(res.json({success:true,userexist:false}))
+        });
+        console.log("user created");
 
         const email = req.body.email;
         let userdata = await User.findOne({ email: req.body.email });

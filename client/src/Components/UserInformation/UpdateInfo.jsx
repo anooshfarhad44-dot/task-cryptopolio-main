@@ -33,7 +33,7 @@ export default function UpdateInfo() {
         setUrl(data.url);
         console.log(url);
         const response = await fetch(
-          "https://cryptofolio-backstack-aiwo.onrender.com/dashboard/profileupdate",
+          "http://localhost:3001/dashboard/profileupdate",
           {
             method: "POST",
             body: JSON.stringify({ UserId: userid, ProfileUrl: data.url }),
@@ -61,7 +61,7 @@ export default function UpdateInfo() {
   useEffect(() => {
     const fetchuserdata = async () => {
       const response = await fetch(
-        "https://cryptofolio-backstack-aiwo.onrender.com/dashboard/userdetails",
+        "http://localhost:3001/dashboard/userdetails",
         {
           method: "POST",
           body: JSON.stringify({ UserId: userid }),

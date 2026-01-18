@@ -5,21 +5,29 @@ export default function Nav({ open }) {
   let json;
 
   const handleDashboard = async () => {
-    console.log(localStorage.authToken);
-    const response = await fetch("https://cryptofolio-backstack-aiwo.onrender.com/dashboard/dashboard", {
-      method: "POST",
-      body: JSON.stringify({ Token: localStorage.authToken }),
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-
-      header: "Access-Control-Allow-Origin: *",
-    });
-    json = await response.json();
-    console.log("response we get");
-    console.log(json);
-    navigate("/dashboard", { state: { id: json.id } });
+    try {
+      console.log(localStorage.authToken);
+      const response = await fetch("http://localhost:3001/dashboard/dashboard", {
+        method: "POST",
+        body: JSON.stringify({ Token: localStorage.authToken }),
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      json = await response.json();
+      console.log("response we get");
+      console.log(json);
+      navigate("/dashboard", { state: { id: json.id } });
+    } catch (error) {
+      console.error("Error fetching dashboard:", error);
+      alert("Failed to connect to server. Please make sure the backend is running on http://localhost:3001");
+    }
   };
 
   const handlelogout = () => {
@@ -43,7 +51,7 @@ export default function Nav({ open }) {
                 <li className="mx-2 text-[15px] sm:text-[18px] md:text-xl">
                   <button
                     onClick={() => {
-                      open[0](true);
+                      open[1](true); // opensign = Signup component (Sign In form)
                     }}
                   >
                     SignIn
@@ -52,7 +60,7 @@ export default function Nav({ open }) {
                 <li className="mx-2 text-[15px] sm:text-[18px] md:text-xl">
                   <button
                     onClick={() => {
-                      open[1](true);
+                      open[0](true); // open = LoginModal component (Sign Up form)
                     }}
                   >
                     SignUp
